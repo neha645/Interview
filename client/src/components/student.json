@@ -1,0 +1,34 @@
+[
+  {
+    "id,": 1,
+    "name": "Nehu",
+    "class": "BCA",
+    "phone": "9302480878",
+    "email": "nehu@gmail.com",
+    "dob": "2007-07-29",
+    "level": "1A",
+    "interviews": [
+        {
+            "id":"1",
+            "stdId": "1",
+            "level":"1A",
+            "skills":"Mern Stack",
+            "score": "10",
+            "result": "Pass",
+            "interviewer":"Yogi Ji",
+            "date": "2024-06-22"
+        },
+        {
+            "id":"2",
+            "stdId": "1",
+            "level":"1B",
+            "skills":"Python",
+            "score": "8",
+            "result": "Pass",
+            "interviewer":"Yogi Ji",
+            "date": "2024-06-28"
+        }
+        
+    ]
+  }
+]
