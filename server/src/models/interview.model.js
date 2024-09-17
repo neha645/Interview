@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const interviewSchema = new mongoose.Schema({
     id: { type: String, required: true },
-    stdId: { type: String, required: true }, 
+    stdId: { type: String, required: true },
     level: { type: String, required: true },
     skills: { type: String, required: true },
     score: { type: String, required: true },

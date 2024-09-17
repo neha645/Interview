@@ -1,34 +1,85 @@
 [
   {
-    "id,": 1,
+    "id": 1,
     "name": "Nehu",
     "class": "BCA",
     "phone": "9302480878",
     "email": "nehu@gmail.com",
     "dob": "2007-07-29",
+    "level": "1C",
+    "interviews": [
+      {
+        "id": "1",
+        "stdId": "1",
+        "level": "1A",
+        "skills": "MERN Stack",
+        "score": "10",
+        "result": "passed",
+        "interviewer": "Yogi Ji",
+        "date": "2024-06-22"
+      },
+      {
+        "id": "2",
+        "stdId": "1",
+        "level": "1B",
+        "skills": "Python",
+        "score": "8",
+        "result": "passed",
+        "interviewer": "Yogi Ji",
+        "date": "2024-06-28"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Raj",
+    "class": "BCA",
+    "phone": "9302480000",
+    "email": "raj@gmail.com",
+    "dob": "2007-08-10",
+    "level": "1B",
+    "interviews": [
+      {
+        "id": "3",
+        "stdId": "2",
+        "level": "1A",
+        "skills": "Java",
+        "score": "6",
+        "result": "passed",
+        "interviewer": "Yogi Ji",
+        "date": "2024-06-25"
+      },
+      {
+        "id": "4",
+        "stdId": "2",
+        "level": "1B",
+        "skills": "Python",
+        "score": "9",
+        "result": "failed",
+        "interviewer": "Yogi Ji",
+        "date": "2024-06-30"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Ankit",
+    "class": "BCA",
+    "phone": "9302480777",
+    "email": "ankit@gmail.com",
+    "dob": "2007-09-15",
     "level": "1A",
     "interviews": [
-        {
-            "id":"1",
-            "stdId": "1",
-            "level":"1A",
-            "skills":"Mern Stack",
-            "score": "10",
-            "result": "Pass",
-            "interviewer":"Yogi Ji",
-            "date": "2024-06-22"
-        },
-        {
-            "id":"2",
-            "stdId": "1",
-            "level":"1B",
-            "skills":"Python",
-            "score": "8",
-            "result": "Pass",
-            "interviewer":"Yogi Ji",
-            "date": "2024-06-28"
-        }
-        
+      {
+        "id": "5",
+        "stdId": "3",
+        "level": "1A",
+        "skills": "Node.js",
+        "score": "4",
+        "result": "failed",
+        "interviewer": "Yogi Ji",
+        "date": "2024-06-21"
+      }
     ]
   }
 ]
