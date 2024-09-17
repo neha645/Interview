@@ -8,6 +8,7 @@ const studentSchema = new Schema({
     email: { type: String, required: true, unique: true },
     dob: { type: Date, required: true },
     level: { type: String, required: true },
+    isPlaced: { type: String, enum: ['true', 'false'], default: 'false' },
     interviews: [{ type: Schema.Types.ObjectId, ref: 'Interview' }]
 });
 
