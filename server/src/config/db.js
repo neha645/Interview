@@ -1,5 +1,4 @@
 import mongoose from "mongoose"
-// const DB_URI = "mongodb+srv://rajputnik911:Mahakal143@interview.fn7rn.mongodb.net/interview?retryWrites=true&w=majority";
 const DB_URI = "mongodb://localhost:27017/interview";
 export const connectToDB = async () => {
     try {
