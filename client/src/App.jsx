@@ -19,7 +19,7 @@ function App() {
         <Route path="/student/:stdId" element={<StudentProfile />} />
 
         {/* Interview records for the student */}
-        <Route path="/student/interview/:stdId" element={<InterviewRecord />} />
+        <Route path="/student/interviews/:stdId" element={<InterviewRecord />} />
       </Routes>
     </Router>
   );
