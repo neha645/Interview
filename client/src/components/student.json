@@ -921,6 +921,15 @@
         "result": "Passed",
         "interviewer": "Mrs. Gupta",
         "date": "2024-06-12"
+      },      {
+        "id": "3",
+        "stdId": "15",
+        "level": "1C",
+        "skills": "Entrepreneurship",
+        "score": "3",
+        "result": "Failed",
+        "interviewer": "Mr. Gupta",
+        "date": "2024-06-05"
       },
       {
         "id": "3",
