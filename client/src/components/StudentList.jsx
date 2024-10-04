@@ -1,32 +1,31 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { addStudent, getAllStudents } from '../services/student';
 
 const StudentList = () => {
   const [students, setStudents] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const { level } = useParams();
   const navigate = useNavigate();
-  const [showModal, setShowModal] = useState(false); 
+  const [showModal, setShowModal] = useState(false);
   const [newStudent, setNewStudent] = useState({
     name: '',
     class: '',
     phone: '',
     email: '',
     dob: '',
-  }); // State for new student data
+    level: '1A'
+  });
 
-  // Function to handle form submission
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-    // Add new student to the list
-    const updatedStudents = [...students, [newStudent]];
-    // setStudents(updatedStudents);
-    // localStorage.setItem('student_data', JSON.stringify(updatedStudents));
-
-    // Reset form and close modal
-    setNewStudent({ name: '', class: '', phone: '', email: '', dob: '' });
-    setShowModal(false);
+  // Handle form submission for adding new student
+  const handleFormSubmit = async (e) => {
+    e.preventDefault(); // Prevent page refresh
+    const addedStudent = await addStudent(newStudent); // Add student to database
+    setStudents((prevStudents) => [...prevStudents, addedStudent]); // Update state with new student
+    setNewStudent({ name: '', class: '', phone: '', email: '', dob: '', level: '1A' }); // Clear form fields
+    setShowModal(false); // Close modal after adding student
   };
+
   // UseMemo to filter students based on level or show all students
   const studentList = useMemo(() => {
     const filteredStudents = level === 'all' ? students : students.filter(student => student.level === level);
@@ -34,22 +33,21 @@ const StudentList = () => {
       student.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       student.level.toLowerCase().includes(searchTerm.toLowerCase()) ||
       student.class.toLowerCase().includes(searchTerm.toLowerCase())
-    );    
+    ).sort((a, b) => b.id - a.id);
   }, [students, level, searchTerm]);
 
+  // Fetch students on component mount
   useEffect(() => {
-    const data = localStorage.getItem('student_data');
-    if (data) {
-      setStudents(JSON.parse(data));
-    } else {
-      console.log('Student data not found');
-    }
+    const fetchStudents = async () => {
+      const data = await getAllStudents();
+      setStudents(data);
+    };
+    fetchStudents();
   }, []);
 
   const handleView = (stdId) => {
     navigate(`/student/${stdId}`);
   };
-
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-100 to-gray-300 flex flex-col items-center py-8">
@@ -124,6 +122,7 @@ const StudentList = () => {
           </table>
         </div>
       </div>
+
       {/* Modal Popup for Adding New Student */}
       {showModal && (
         <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">

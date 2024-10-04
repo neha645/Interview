@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import studentData from './student.json';
 import { useNavigate } from 'react-router-dom';
+import { getAllStudents } from '../services/student';
 
 const levels = [1, 2, 3];
 const sublevels = ['A', 'B', 'C'];
@@ -10,12 +10,13 @@ const Dashboard = () => {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const data = localStorage.getItem('student_data');
-    if (!data) {
-      localStorage.setItem('student_data', JSON.stringify(studentData));
-    }
-    setStudents(JSON.parse(data));
+  useEffect(()=>{
+    const fetchStudents = async () => {
+      const data = await getAllStudents();
+      console.log('data', data);
+      setStudents(data);
+      }
+      fetchStudents();
   }, []);
 
   const getLevelCounts = (level) => {
@@ -72,7 +73,7 @@ const Dashboard = () => {
                         onClick={() => handleStudentList(`${level}${sublevel}`)}
                         className="bg-blue-500 text-white text-xs px-4 py-2 rounded hover:bg-blue-600 transition-colors">
                         View
-                        
+
                       </button>
                     </div>
 

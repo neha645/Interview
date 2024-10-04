@@ -1,31 +1,45 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { getAllStudents } from '../services/student';
+import { getInterviewsByStudentId, addInterview } from '../services/interview';
 
 const StudentInterviews = () => {
   const { stdId } = useParams();
-  const studentIdNumber = parseInt(stdId);
   const [students, setStudents] = useState([]);
+  const [interviews, setInterviews] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [newInterview, setNewInterview] = useState({
     level: '',
     skills: '',
-    score: 0, // Initialize score as a number
+    score: 0,
     result: '',
     interviewer: '',
     date: '',
   });
 
   useEffect(() => {
-    const data = localStorage.getItem('student_data');
-    if (!data) {
-      console.log('Student data not found');
-      return;
-    }
-    setStudents(JSON.parse(data));
-  }, []);
+    const fetchStudentsAndInterviews = async () => {
+      const data = await getAllStudents();
+      setStudents(data);
+      
+      const studentInterviews = await getInterviewsByStudentId(stdId);
+      setInterviews(studentInterviews); // Set interviews state
+    };
 
-  const student = students.find(student => student.id === studentIdNumber);
-  const interviews = student ? student.interviews : [];
+    fetchStudentsAndInterviews();
+  }, [stdId]);
+
+  const student = students.find(student => student.id == stdId);
+
+  // Handle form submission for adding a new interview
+  const handleAddInterview = async (e) => {
+    e.preventDefault();
+    const addedInterview = await addInterview(stdId, newInterview);
+
+    // Update the interviews list with the newly added interview
+    setInterviews([...interviews, addedInterview]);
+    setShowModal(false); // Close modal after adding interview
+  };
 
   // Function to get slider color based on score
   const getSliderColor = (score) => {
@@ -41,11 +55,11 @@ const StudentInterviews = () => {
           <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">
             Interview Records for {student.name}
           </h1>
-          <div className='flex justify-between items-center bg-white p-2 rounded-lg shadow-md'>
+          <div className="flex justify-between items-center bg-white p-2 rounded-lg shadow-md">
             <p className="text-lg font-semibold">Total Interviews: {interviews.length}</p>
             <button
               onClick={() => setShowModal(true)}
-              className='bg-blue-500 text-white text-sm px-6 py-2 rounded-lg hover:bg-blue-600 transition duration-200'>
+              className="bg-blue-500 text-white text-sm px-6 py-2 rounded-lg hover:bg-blue-600 transition duration-200">
               Add New Interview
             </button>
           </div>
@@ -99,7 +113,7 @@ const StudentInterviews = () => {
         <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-lg">
             <h2 className="text-xl font-bold mb-4 text-center">Add New Interview</h2>
-            <form onSubmit={(e) => { e.preventDefault(); /* Handle form submission */ }} className="space-y-4">
+            <form onSubmit={handleAddInterview} className="space-y-4">
               {/* Row with Level and Skills */}
               <div className="flex space-x-4">
                 <div className="flex-1">
@@ -152,7 +166,6 @@ const StudentInterviews = () => {
                 </div>
               </div>
 
-
               {/* Result Dropdown */}
               <div>
                 <label className="block text-sm font-medium text-gray-700">Result</label>
@@ -188,9 +201,7 @@ const StudentInterviews = () => {
                     className="w-full border px-4 py-2 rounded-md focus:ring-blue-500 focus:border-blue-500"
                     required
                   />
-                </div
-
-                >
+                </div>
               </div>
 
               {/* Buttons */}

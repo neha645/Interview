@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { getAllStudents } from '../services/student';
 
 
 const StudentProfile = () => {
@@ -7,17 +8,19 @@ const StudentProfile = () => {
   const [students, setStudents] = useState([]);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const data = localStorage.getItem('student_data');
-    if (!data) {
-      console.log('Student data not found');
 
-    }
-    setStudents(JSON.parse(data));
+  useEffect(()=>{
+    const fetchStudents = async () => {
+      const data = await getAllStudents();
+      console.log('data', data);
+      setStudents(data);
+      }
+      fetchStudents();
   }, []);
 
+
   // Find the student by ID
-  const student = students.find(student => student.id === parseInt(stdId));
+  const student = students.find(student => student.id == stdId);
 
   // Handle navigation to the interview records page
   const handleViewInterview = () => {
